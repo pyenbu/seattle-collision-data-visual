@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Uncomment if you want your page to NOT be indexed by search engines: -->
+  <meta name="robots" content="none"> 
+  <link rel="stylesheet" href="style.css" />
+  <title>Seattle Ped and Bike Traffic Collisions</title>
+
+  <!-- Uncomment if using d3: -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://d3js.org/topojson.v1.min.js"></script>
+  <script src="https://d3js.org/d3-queue.v3.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3-array@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-geo@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-geo-projection@4"></script>
+
+  <!-- Leaflet-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+  integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+  crossorigin=""></script>
+
+</head>
+
+<!------------------------------------------------------------>
+<!-- You are free to modify this template however you want! -->
+<!------------------------------------------------------------>
+
+<body>
+  <header>
+    <h1><a href=".">How does the severity and location of traffic collisions involving pedestrians and bicyclists in seattle change between 2004 to 2021? </a></h1>
+
+    <p>
+      <strong>Team Members</strong>: Pahn Y, tyler543, Pu T, lochoa2
+    </p>
+    <br/>
+    <p>
+      By 2030, Seattle aims to achieve zero deaths and serious injuries from traffic collisions. Called Vision Zero, the goal acknowledges the role of building preventive traffic infrastructure to account for human error and fragility. As the first state to adopt the Vision Zero policy in 2000, how has the most populated city in Washington fared throughout the years?
+    </p>
+    <br/>
+    <p>
+      Best viewed on desktop or laptop.
+    </p>
+  </header>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css">
+
+    
+
+      <div class="main">
+        <h2>Traffic Collisions involving Pedestrians and/or Bicyclists in Seattle</h2>
+        <div class="flex">
+          <div id="map"></div>
+          <div class="detail-container">
+            <label for="yearInput">Year:</label>
+            <p id="currYear">2004</p>
+            <input id="yearInput" type="range" class="slider" value="2004" min="2004", max="2021", step="1", style="width: 600px"}></input>
+            <div id="d3-legend-container"></div>
+            <div id="d3-barchart-container"></div>
+            <div id="d3-trendline-container"></div>
+          </div>
+        </div>
+      </div>
+      <div class="flex">
+        <!-- * Map, legend, and slider -->
+        <!-- <input id="yearInput" type="range" min="2004", max="2021", step="1"></input>
+        <label for="yearInput">Year</label>
+        <h1 id="currYear">2004</h1>
+        <div id="d3-legend-container"></div> -->
+
+        <!-- * Leo's bar chart -->
+        <!--<select id="button"></select>--> <!-- bar chart's -->
+        
+      </div>
+
+
+    <h2>Design Decisions</h2>
+    <p>
+      <em>Add a rationale for your design decisions. How did you choose your
+        particular visual encodings and interaction techniques? What
+        alternatives did you consider and how did you arrive at your ultimate
+        choices?</em>
+        <p>For our interactive design, we decided to tackle the City of Seattle’s traffic collision data set spanning from 2004 to the present. Each row represents a collision and includes extensive metadata like the collision’s coordinates, the number of people involved, weather conditions, the severity of the collision, etc. However, our charts only address a subset of the data–the collisions involving pedestrians or bicyclists. The narrower focus prevents information overload and gives more purpose to the visualization. Additionally, we only included data up to 2021 to exclude potentially incomplete data.
+          <br/><br/>
+          Since our question explores the severity and location of pedestrian collisions throughout the year range, we decided to represent each collision as a point on a map. This takes advantage of positional encoding to convey spatial information. Furthermore, we added a map base with street names and landmarks for viewers to connect the points to real-life locations and enhance their understanding. 
+          <br/><br/>
+          Each point’s color represents the severity of the collision. We considered the severity of the collision a nominal field, but it also can be an ordinal data type since it scales up in severity (property damage -> Injury -> serious Injury -> fatality). We decided on different hues for the nominal categories–the second most effective encoding for nominal data–to strongly differentiate the categories on the map at a glance. Moreover, we chose colors that were colorblind friendly to make our visualization more accessible. The ordinal connection was secondary since if it were based on saturation or density alone, the overlapping dots with some transparency would have made it difficult to tell categories apart. We also made sure to include a legend to the side that maps each dot color to the type of severity. To keep things consistent and easier to digest, we coded the colors using the same dots that appear on the map.
+          <br/><br/>
+          Initially, the map had a lighter theme. After careful consideration, we decided to lower the brightness of the map so that brighter data points on the map were emphasized. With this, we were able to choose a color scheme that varied in both hue and brightness (when switched to grayscale, the categories still have distinct values).
+          <br/><br/>
+          The year slider is the interactive crux of our visualization. It cycles through each year from 2004 to 2021 and updates the map, bar chart, and stacked line graph to include only collisions that took place within that year. We decided to display collisions per year to provide the viewer with more detail for that year. It facilitates data exploration and anticipates secondary questions like, “How does the severity distribution for a specific year look like?” or “Is there a pattern to the location of collisions throughout the years?” or “Was a particular area especially bad for walkability in 2017?” etcetera. The bar chart and stacked trendlines aim to provide additional context about the overall data to help generate those questions and to fill in informative gaps the map can’t fulfill.
+          <br/><br/>
+          Although the map excels at spatial information, viewers cannot effectively discern aggregate relationships. For instance, we can see that injuries make up the majority of the dots, but we cannot tell by how much. Therefore, we added a bar chart to display the quantitative values of the total collisions per each severity type. The bar chart is indexed from zero because in an ideal world, we would have zero injuries and fatalities from traffic collisions (and the data type is qualitative ratio). Additionally, the y-axis range does not change between each year to prevent misleading interpretations of the ratios from year to year. Since some items on the bar chart were bigger than others we decided to add a tooltip. After hovering over a bar for about a second, it displays its exact value. This allows the user to have a clear indication of the number of pedestrian and cyclist collisions when hovering over a bar. The bar chart’s colors and column ordering from left to right also correspond with the legend to promote visualization cohesiveness. 
+          <br/><br/>
+          The stacked trendline breaks free of the year isolation to show the overall trend of collisions from 2004 to 2021. Initially, we did not plan to include the stacked trendline, but we realized that the included elements made it hard to compare years that were not adjacent to each other (For example, “How does the injuries in 2004 compare to 2020?”). Additionally, it raises points of interest, like the year with the most collisions or the sudden drop in 2020 (due to pandemic). The trendline provides an overview of the collisions throughout the years and lets viewers see how they directly compare. A white horizontal line in the chart marks the current year and moves along with the slider. It orients the viewer and contextualizes the presented yearly information. Particularly, it answers the visualization’s question partially at a glance, although superficially since it does not provide information about location. It also does not make the bar chart obsolete since they fulfill different niches (yearly basis versus overview).
+          <br/><br/>
+          </p>
+    </p>
+
+    <h2>Development Process</h2>
+    <p>
+      <em>Describe how the work was split among the team members. Include a
+        commentary on the development process, including answers to the
+        following questions: Roughly how much time did you spend developing
+        your application (in person-hours)? What aspects took the most
+        time?</em>
+        <p>
+          The work was split fairly evenly. We partitioned the work by feature (ex. map, legend, bar chart, trendline) and worked separately for the most part in our own js files to avoid merge conflicts. After getting the data analysis and general shape done, we began reaching into others’ js files to help out and connect overarching components. 
+          <br/><br/>
+There was also some unexpected work like data wrangling and cleaning. After some excel and python scripts, we were able to slim down the City of Seattle’s data set to two csv files, collisions.csv and collisions_agg.csv. Collisions.csv was used for the map and bar chart, while collisions_agg.csv was used for the trendline. 
+<br/><br/>
+The first thing we tackled was creating the map. The map was created through pair programming in 15+ hours. The most frustrating part was the beginning of the process. Since we decided to integrate leaflet with d3, we looked up multiple tutorials but they were sparse and at times, incomplete for newbies. It was a harsh learning curve. Many early issues pertained to incorrect import statements for packages or for the d3 data, or little mistakes (ex. swapping lat and long) that we overlooked. Getting the map and dots to show up on the map took the longest time. However, we felt the pair programming helped immensely since we had two pairs of eyes researching, checking the code, and coming up with solutions. It also staved off fatigue since communicating was more engaging than working alone.
+<br/><br/>
+After this we decided to add a bar chart. At first I thought the bar chart was going to be straightforward and not take too much time. The bar chart ended up taking a little over 10 hours to fully complete. Some things that made the bar chart take long was that the data set was not displaying correctly. Another thing that was time consuming was getting the tooltip to display the correct information when changing the years. 
+<br/><br/>
+The trendline did not take as long since at this point, we had more experience with d3 and it was repurposed from a template. 
+<br/><br/>
+        </p>
+    </p>
+
+  </main>
+  <footer>
+    <p>
+      <a href="https://gitlab.cs.washington.edu/cse442/wi23/a3/herbert">Repository</a>
+      <br>
+      <a href="https://courses.cs.washington.edu/courses/cse442/23wi/">CSE 442 Data Visualization</a>
+      <br>
+      <a href="https://www.washington.edu">University of Washington</a>
+    </p>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="d3-map.js"></script>
+  <script src="d3-barchart.js"></script>
+  <script src="d3-trendline.js"></script>
+  <script src="d3-legend.js"></script>
+
+</body>
+
+</html>

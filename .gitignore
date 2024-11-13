@@ -1,0 +1,2 @@
+# ignore large data files
+/public/data/SDOT_*
