@@ -53,24 +53,22 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css">
 
     
-
-      <div class="main">
+    <main>
         <h2>Traffic Collisions involving Pedestrians and/or Bicyclists in Seattle</h2>
         <div class="flex">
           <div id="map"></div>
           <div class="detail-container">
             <label for="yearInput">Year:</label>
             <p id="currYear">2004</p>
-            <input id="yearInput" type="range" class="slider" value="2004" min="2004", max="2021", step="1", style="width: 600px"}></input>
+            <input id="yearInput" type="range" class="slider" value="2004" min="2004", max="2021", step="1", style="width: 600px">
             <div id="d3-legend-container"></div>
             <div id="d3-barchart-container"></div>
             <div id="d3-trendline-container"></div>
           </div>
         </div>
-      </div>
       <div class="flex">
         <!-- * Map, legend, and slider -->
-        <!-- <input id="yearInput" type="range" min="2004", max="2021", step="1"></input>
+        <!-- <input id="yearInput" type="range" min="2004", max="2021", step="1">
         <label for="yearInput">Year</label>
         <h1 id="currYear">2004</h1>
         <div id="d3-legend-container"></div> -->
@@ -114,21 +112,21 @@
         <p>
           The work was split fairly evenly. We partitioned the work by feature (ex. map, legend, bar chart, trendline) and worked separately for the most part in our own js files to avoid merge conflicts. After getting the data analysis and general shape done, we began reaching into others’ js files to help out and connect overarching components. 
           <br/><br/>
-There was also some unexpected work like data wrangling and cleaning. After some excel and python scripts, we were able to slim down the City of Seattle’s data set to two csv files, collisions.csv and collisions_agg.csv. Collisions.csv was used for the map and bar chart, while collisions_agg.csv was used for the trendline. 
-<br/><br/>
-The first thing we tackled was creating the map. The map was created through pair programming in 15+ hours. The most frustrating part was the beginning of the process. Since we decided to integrate leaflet with d3, we looked up multiple tutorials but they were sparse and at times, incomplete for newbies. It was a harsh learning curve. Many early issues pertained to incorrect import statements for packages or for the d3 data, or little mistakes (ex. swapping lat and long) that we overlooked. Getting the map and dots to show up on the map took the longest time. However, we felt the pair programming helped immensely since we had two pairs of eyes researching, checking the code, and coming up with solutions. It also staved off fatigue since communicating was more engaging than working alone.
-<br/><br/>
-After this we decided to add a bar chart. At first I thought the bar chart was going to be straightforward and not take too much time. The bar chart ended up taking a little over 10 hours to fully complete. Some things that made the bar chart take long was that the data set was not displaying correctly. Another thing that was time consuming was getting the tooltip to display the correct information when changing the years. 
-<br/><br/>
-The trendline did not take as long since at this point, we had more experience with d3 and it was repurposed from a template. 
-<br/><br/>
+        There was also some unexpected work like data wrangling and cleaning. After some excel and python scripts, we were able to slim down the City of Seattle’s data set to two csv files, collisions.csv and collisions_agg.csv. Collisions.csv was used for the map and bar chart, while collisions_agg.csv was used for the trendline. 
+        <br/><br/>
+        The first thing we tackled was creating the map. The map was created through pair programming in 15+ hours. The most frustrating part was the beginning of the process. Since we decided to integrate leaflet with d3, we looked up multiple tutorials but they were sparse and at times, incomplete for newbies. It was a harsh learning curve. Many early issues pertained to incorrect import statements for packages or for the d3 data, or little mistakes (ex. swapping lat and long) that we overlooked. Getting the map and dots to show up on the map took the longest time. However, we felt the pair programming helped immensely since we had two pairs of eyes researching, checking the code, and coming up with solutions. It also staved off fatigue since communicating was more engaging than working alone.
+        <br/><br/>
+        After this we decided to add a bar chart. At first I thought the bar chart was going to be straightforward and not take too much time. The bar chart ended up taking a little over 10 hours to fully complete. Some things that made the bar chart take long was that the data set was not displaying correctly. Another thing that was time consuming was getting the tooltip to display the correct information when changing the years. 
+        <br/><br/>
+        The trendline did not take as long since at this point, we had more experience with d3 and it was repurposed from a template. 
+        <br/><br/>
         </p>
     </p>
 
   </main>
   <footer>
     <p>
-      <a href="https://gitlab.cs.washington.edu/cse442/wi23/a3/herbert">Repository</a>
+      <a href="https://github.com/pyenbu/seattle-collision-data-visual">Repository</a>
       <br>
       <a href="https://courses.cs.washington.edu/courses/cse442/23wi/">CSE 442 Data Visualization</a>
       <br>
