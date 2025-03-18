@@ -4,10 +4,10 @@ This is an interactive web-based visualization tool analyzing the severity and l
 ![Poster of the project](public/img/poster.png)
 
 Team members:
-Pahn Yenbut
-[Pu Thavikulwat](https://github.com/fudgelgentle)
-Leonardo Ochoa
-Tyler Nguyen
+* Pahn Yenbut
+* [Pu Thavikulwat](https://github.com/fudgelgentle)
+* Leonardo Ochoa
+* Tyler Nguyen
 
 Originally created in Winter 2023
 
