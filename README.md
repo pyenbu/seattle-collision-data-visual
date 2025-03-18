@@ -2,7 +2,7 @@
 Data visualization exploring the severity and location of traffic collisions involving bikes or pedestrians from 2004 to 2021 in Seattle 
 
 Team members:
-pyenbu, tyler543, pu098, lochoa2
+pyenbu, tyler543, [pu098](https://github.com/fudgelgentle), lochoa2
 
 Originally created in winter 2023
 
